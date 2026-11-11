@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>duc</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Hiệu ứng lông vũ rơi (Màu xám, rơi chéo) */
+        .feather {
+            position: absolute;
+            font-size: 30px;
+            color: #222;
+            opacity: 0.8;
+            animation: fall linear infinite;
+            z-index: 1;
+            filter: blur(0.5px);
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); }
+            50% { transform: translateY(50vh) translateX(-30px) rotate(90deg); }
+            100% { transform: translateY(110vh) translateX(30px) rotate(180deg); }
+        }
+
+        /* Container chính */
+        .main-container {
+            z-index: 10;
+            width: 100%;
+            max-width: 400px;
+            margin-top: 40px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+
+        /* Cấu trúc thẻ Card kỳ dị (Bo góc chéo) */
+        .card {
+            background: #1c1c1e;
+            border-radius: 0 30px 0 30px; 
+            padding: 20px;
+            position: relative;
+            border-top: 1px solid #333;
+            border-left: 1px solid #333;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            border-radius: 0 32px 0 32px;
+            background: transparent;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-left: 1px solid rgba(255,255,255,0.1);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Nút Loa nằm gọn BÊN TRONG khung, góc trái trên */
+        .music-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #111;
+            border: 1px solid #333;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 20;
+            transition: 0.3s;
+        }
+        .music-btn:hover { background: #333; }
+        .music-btn svg { width: 18px; fill: #fff; }
+
+        /* Phần Avatar và Tên */
+        .profile-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-top: 40px; 
+            margin-bottom: 15px;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 2px solid #333;
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-top: 5px;
+        }
+
+        /* Chữ duc */
+        .username {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .sub-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* Hàng Icon - Đã thay bằng ảnh của bro */
+        .social-icons {
+            display: flex;
+            gap: 12px;
+            margin-top: 5px;
+        }
+        .social-icons a {
+            display: inline-block;
+            transition: 0.2s;
+        }
+        .social-icons a:hover { transform: scale(1.1); }
+        .social-icons img {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #333;
+        }
+
+        /* Thanh thông tin dưới cùng */
+        .bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #333;
+            padding-top: 15px;
+            font-size: 14px;
+            color: #aaa;
+            font-weight: 700;
+            margin-top: 15px;
+        }
+
+        .stat { display: flex; align-items: center; gap: 6px; }
+        .stat svg { width: 16px; height: 16px; fill: #aaa; }
+        
+        .divider {
+            width: 1px;
+            height: 16px;
+            background: #444;
+        }
+
+        /* Khung Server Phụ (Cũng bo góc chéo) */
+        .server-wrapper {
+            background: #1c1c1e;
+            border-radius: 0 25px 0 25px;
+            padding: 15px 20px;
+            border-top: 1px solid #333;
+            border-left: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .server-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .server-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .server-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .server-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .server-name {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .server-stats {
+            display: flex;
+            gap: 10px;
+            font-size: 12px;
+            color: #888;
+            font-weight: 600;
+        }
+        .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+        .dot.online { background: #23a55a; }
+        .dot.offline { background: #555; }
+
+        .join-btn {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-family: inherit;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .join-btn:hover { background: #fff; color: #000; }
+
+        /* Dòng kẻ mờ */
+        .separator {
+            height: 1px;
+            background: #333;
+            width: 100%;
+        }
+
+        /* Khối User phía dưới */
+        .user-mini {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mini-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            position: relative;
+        }
+        .mini-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .status-dot {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 14px;
+            height: 14px;
+            background: #f59e0b;
+            border: 2px solid #1c1c1e;
+            border-radius: 50%;
+        }
+
+        .mini-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .mini-name {
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge {
+            background: #333;
+            color: #fff;
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .mini-status {
+            font-size: 14px;
+            color: #888;
+            font-weight: 600;
+        }
+
+        /* Hiệu ứng Kéo xuống */
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            z-index: 10;
+            opacity: 0.8;
+        }
+        
+        .heart-draw {
+            width: 25px;
+            height: 25px;
+            stroke: #fff;
+            stroke-width: 2;
+            fill: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Hiệu ứng lông vũ -->
+    <div id="feathers-container"></div>
+
+    <div class="main-container">
+        
+        <!-- KHỐI 1: PROFILE CHÍNH -->
+        <div class="card">
+            <!-- Nút Loa -->
+            <div class="music-btn" id="playBtn">
+                <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            </div>
+
+            <div class="profile-top">
+                <!-- ẢNH ĐẠI DIỆN CỦA BRO -->
+                <img src="https://files.catbox.moe/z5npmw.jpeg" alt="Avatar" class="avatar">
+                <div class="user-info">
+                    <div class="username">
+                        duc
+                        <!-- ẢNH TICK XANH MỚI -->
+                        <img src="https://files.catbox.moe/44b5yb.png" style="width: 22px; height: 22px; object-fit: contain; margin-left: 5px;">
+                        <!-- ẢNH TRÁI TIM MỚI -->
+                        <img src="https://files.catbox.moe/t1r6ht.webp" style="width: 22px; height: 22px; object-fit: contain; margin-left: 5px;">
+                    </div>
+                    <div class="sub-text">/</div>
+                    <div class="social-icons">
+                        <!-- ẢNH APP 1 -->
+                        <a href="#"><img src="https://files.catbox.moe/8oaacy.jpg" alt="App 1"></a>
+                        <!-- ẢNH APP 2 -->
+                        <a href="#"><img src="https://files.catbox.moe/wiu0c5.jpg" alt="App 2"></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bottom-bar">
+                <div class="stat">
+                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    <span id="clock">19:50:24</span>
+                </div>
+                <div class="stat">
+                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    2,535
+                </div>
+                <div class="divider"></div>
+                <div class="stat">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    your heart
+                </div>
+            </div>
+        </div>
+
+        <!-- KHỐI 2: SERVER VÀ USER MINI -->
+        <div class="server-wrapper">
+            <!-- Star Galaxy -->
+            <div class="server-card">
+                <div class="server-avatar">
+                    <img src="https://cdn-icons-png.flaticon.com/512/616/616430.png" alt="Cat">
+                </div>
+                <div class="server-info">
+                    <div class="server-name">star galaxy</div>
+                    <div class="server-stats">
+                        <div class="stat"><span class="dot online"></span> 17 Online</div>
+                        <div class="stat"><span class="dot offline"></span> 46 Members</div>
+                    </div>
+                </div>
+                <button class="join-btn">Join</button>
+            </div>
+            
+            <div class="separator"></div>
+
+            <!-- User Mini (duc Idle) -->
+            <div class="user-mini">
+                <div class="mini-avatar">
+                    <img src="https://files.catbox.moe/z5npmw.jpeg" alt="Duc">
+                    <div class="status-dot"></div>
+                </div>
+                <div class="mini-info">
+                    <div class="mini-name">
+                        duc 
+                        <span class="badge">⚔️ Fall</span>
+                    </div>
+                    <div class="mini-status">Idle</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Nút Scroll và trái tim ở dưới cùng -->
+    <div class="scroll-down">
+        <svg class="heart-draw" viewBox="0 0 24 24">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        <span>KÉO XUỐNG</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+
+    <script>
+        // Hiệu ứng thời gian thực
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').innerText = `${h}:${m}:${s}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Hiệu ứng tạo lông vũ rơi
+        function createFeather() {
+            const container = document.getElementById('feathers-container');
+            const feather = document.createElement('div');
+            feather.classList.add('feather');
+            feather.innerText = '🪶';
+            
+            feather.style.left = Math.random() * 100 + 'vw';
+            const duration = Math.random() * 5 + 5; // Rơi chậm hơn
+            feather.style.animationDuration = duration + 's';
+            feather.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            
+            container.appendChild(feather);
+            
+            setTimeout(() => {
+                feather.remove();
+            }, duration * 1000);
+        }
+        
+        // Tạo lông vũ liên tục
+        setInterval(createFeather, 800);
+    </script>
+</body>
+  </html>
