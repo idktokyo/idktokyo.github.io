@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>duc</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap');
 
         * {
             margin: 0;
@@ -26,82 +26,64 @@
             overflow-x: hidden;
         }
 
-        /* Hiệu ứng lông vũ rơi (Màu xám mờ) */
         .feather {
             position: absolute;
-            font-size: 24px;
-            color: #333;
-            opacity: 0.5;
+            font-size: 30px;
+            color: #222;
+            opacity: 0.8;
             animation: fall linear infinite;
             z-index: 1;
-            transform-origin: center;
+            filter: blur(0.5px);
         }
 
         @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); }
-            50% { transform: translateY(50vh) rotate(180deg) translateX(20px); }
-            100% { transform: translateY(110vh) rotate(360deg) translateX(-20px); }
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); }
+            50% { transform: translateY(50vh) translateX(-30px) rotate(90deg); }
+            100% { transform: translateY(110vh) translateX(30px) rotate(180deg); }
         }
 
-        /* Container chính */
         .main-container {
             z-index: 10;
             width: 100%;
-            max-width: 380px;
-            margin-top: 50px;
-            padding: 0 15px;
+            max-width: 400px;
+            margin-top: 40px;
+            padding: 0 20px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             position: relative;
         }
 
-        /* Hiệu ứng viền kép cho thẻ Card */
-        .card-wrapper {
-            position: relative;
-            border-radius: 28px;
-            padding: 2px;
-            background: #000;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .card-wrapper::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 28px;
-            border: 1px solid #222;
-            z-index: -1;
-        }
-
-        /* Tạo cái viền bóng mờ (Glow) phía sau */
-        .card-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 5px; left: 5px; right: 5px; bottom: -5px;
-            border-radius: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            z-index: -2;
-        }
-
-        /* Card chính */
         .card {
-            background: #141416;
-            border-radius: 26px;
+            background: #1c1c1e;
+            border-radius: 0 30px 0 30px; 
             padding: 20px;
             position: relative;
-            border: 1px solid #222;
+            border-top: 1px solid #333;
+            border-left: 1px solid #333;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
         }
 
-        /* Nút Loa (Lồi ra ngoài góc trái) */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -3px; left: -3px; right: -3px; bottom: -3px;
+            border-radius: 0 32px 0 32px;
+            background: transparent;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-left: 1px solid rgba(255,255,255,0.1);
+            z-index: -1;
+            pointer-events: none;
+        }
+
         .music-btn {
             position: absolute;
-            top: 20px;
-            left: -28px;
-            background: #0f0f11;
-            border: 1px solid #222;
-            width: 45px;
-            height: 45px;
+            top: 15px;
+            left: 15px;
+            background: #111;
+            border: 1px solid #333;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -110,108 +92,109 @@
             z-index: 20;
             transition: 0.3s;
         }
-        .music-btn:hover { background: #222; }
-        .music-btn svg { width: 20px; fill: #fff; }
+        .music-btn:hover { background: #333; }
+        .music-btn svg { width: 18px; fill: #fff; }
 
-        /* Phần Avatar và Tên */
         .profile-top {
             display: flex;
             align-items: flex-start;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-top: 40px; 
+            margin-bottom: 15px;
         }
 
         .avatar {
-            width: 110px;
-            height: 110px;
+            width: 100px;
+            height: 100px;
             border-radius: 20px;
             object-fit: cover;
-            border: 2px solid #222;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            border: 2px solid #333;
         }
 
         .user-info {
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            padding-top: 10px;
+            gap: 8px;
+            padding-top: 5px;
         }
 
         .username {
-            font-size: 26px;
+            font-size: 28px;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 6px;
-            color: #444; /* Chữ xám đậm như ảnh */
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            gap: 8px;
+            color: #666;
             line-height: 1;
+            letter-spacing: -0.5px;
         }
-
-        .tick-icon { width: 18px; height: 18px; fill: #3b82f6; margin-left: 2px; }
-        .heart-icon { font-size: 18px; margin-left: 2px; color: #ec4899; text-shadow: 0 0 5px #ec4899; }
 
         .sub-text {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 10px;
-            margin-left: 2px;
         }
 
-        /* Hàng Icon */
         .social-icons {
             display: flex;
-            gap: 15px;
-            margin-top: 5px;
+            gap: 10px;
+            margin-top: 10px;
         }
         .social-icons a {
-            color: #fff;
-            text-decoration: none;
+            display: inline-block;
             transition: 0.2s;
         }
         .social-icons a:hover { transform: scale(1.1); }
-        .social-icons svg { width: 24px; height: 24px; fill: #fff; }
+        .social-icons img {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #333;
+        }
 
-        /* Thanh thông tin dưới cùng (có đường kẻ mờ) */
         .bottom-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid #222;
+            border-top: 1px solid #333;
             padding-top: 15px;
-            font-size: 13px;
-            color: #888;
+            font-size: 14px;
+            color: #aaa;
             font-weight: 700;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         .stat { display: flex; align-items: center; gap: 6px; }
-        .stat svg { width: 16px; height: 16px; fill: #888; }
+        .stat svg { width: 16px; height: 16px; fill: #aaa; }
         
-        /* Đường kẻ dọc giữa các stat */
         .divider {
             width: 1px;
-            height: 15px;
-            background: #333;
-            margin: 0 5px;
+            height: 16px;
+            background: #444;
         }
 
-        /* Card Server Phụ */
-        .server-card {
-            background: #141416;
-            border-radius: 26px;
+        .server-wrapper {
+            background: #1c1c1e;
+            border-radius: 0 25px 0 25px;
             padding: 15px 20px;
-            border: 1px solid #222;
+            border-top: 1px solid #333;
+            border-left: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .server-card {
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
         .server-avatar {
-            width: 55px;
-            height: 55px;
-            border-radius: 15px; /* Bo góc vuông */
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
             background: #fff;
             display: flex;
             justify-content: center;
@@ -229,7 +212,7 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
         }
 
         .server-name {
@@ -242,21 +225,21 @@
 
         .server-stats {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             font-size: 12px;
             color: #888;
-            font-weight: 700;
+            font-weight: 600;
         }
-        .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
         .dot.online { background: #23a55a; }
-        .dot.offline { background: #888; }
+        .dot.offline { background: #555; }
 
         .join-btn {
             background: transparent;
             color: #fff;
-            border: 1px solid #333;
-            padding: 8px 20px;
-            border-radius: 15px;
+            border: 1px solid #444;
+            padding: 8px 18px;
+            border-radius: 12px;
             font-weight: 700;
             font-family: inherit;
             font-size: 14px;
@@ -265,21 +248,21 @@
         }
         .join-btn:hover { background: #fff; color: #000; }
 
-        /* Card Nhỏ dưới cùng (User Idle) */
-        .user-mini-card {
-            background: #141416;
-            border-radius: 20px;
-            padding: 12px 15px;
-            border: 1px solid #222;
+        .separator {
+            height: 1px;
+            background: #333;
+            width: 100%;
+        }
+
+        .user-mini {
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-top: 5px;
         }
 
         .mini-avatar {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             position: relative;
         }
@@ -288,16 +271,15 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 1px solid #333;
         }
         .status-dot {
             position: absolute;
-            bottom: -2px;
-            right: -2px;
+            bottom: 0;
+            right: 0;
             width: 14px;
             height: 14px;
-            background: #f59e0b; /* Màu vàng cam */
-            border: 2px solid #141416;
+            background: #f59e0b;
+            border: 2px solid #1c1c1e;
             border-radius: 50%;
         }
 
@@ -308,7 +290,7 @@
         }
 
         .mini-name {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             display: flex;
             align-items: center;
@@ -316,183 +298,131 @@
         }
 
         .badge {
-            background: #27272a;
+            background: #333;
             color: #fff;
-            font-size: 11px;
+            font-size: 12px;
             padding: 2px 8px;
-            border-radius: 10px;
+            border-radius: 12px;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
 
         .mini-status {
-            font-size: 13px;
-            color: #aaa;
+            font-size: 14px;
+            color: #888;
             font-weight: 600;
         }
 
-        /* Nút Scroll xuống dưới cùng */
         .scroll-down {
             position: absolute;
             bottom: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             color: #fff;
             font-size: 12px;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             z-index: 10;
-            cursor: pointer;
-            opacity: 0.7;
-            transition: 0.3s;
-        }
-        .scroll-down:hover { opacity: 1; }
-        
-        /* Hình trái tim vẽ tay */
-        .heart-draw {
-            width: 30px;
-            height: 30px;
-            border: 2px solid #fff;
-            border-radius: 50% 50% 0 0;
-            transform: rotate(-45deg);
-            position: relative;
-        }
-        .heart-draw::before, .heart-draw::after {
-            content: '';
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            top: -2px;
-            left: -15px;
-        }
-        .heart-draw::after {
-            left: 14px;
-            top: 14px;
-            transform: rotate(90deg);
-        }
-        
-        /* Fix lại hình trái tim cho giống nét vẽ */
-        .heart-icon-svg {
-            width: 40px;
-            height: 40px;
-            stroke: #fff;
-            stroke-width: 1.5;
-            fill: none;
-            stroke-linecap: round;
-            stroke-linejoin: round;
             opacity: 0.8;
         }
-
+        
+        .heart-draw {
+            width: 25px;
+            height: 25px;
+            stroke: #fff;
+            stroke-width: 2;
+            fill: none;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Hiệu ứng lông vũ -->
     <div id="feathers-container"></div>
 
     <div class="main-container">
         
-        <!-- KHỐI 1: PROFILE CHÍNH -->
-        <div class="card-wrapper">
-            <div class="card">
-                <!-- Nút Loa -->
-                <div class="music-btn" id="playBtn">
-                    <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                </div>
+        <div class="card">
+            <div class="music-btn" id="playBtn">
+                <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            </div>
 
-                <div class="profile-top">
-                    <!-- ẢNH CỦA BRO -->
-                    <img src="https://files.catbox.moe/z5npmw.jpeg" alt="Avatar" class="avatar">
-                    <div class="user-info">
-                        <div class="username">
-                            duc
-                            <svg class="tick-icon" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-                            <span class="heart-icon">🩷</span>
-                        </div>
-                        <div class="sub-text">/</div>
-                        <div class="social-icons">
-                            <a href="#"><svg viewBox="0 0 24 24"><path d="M20.3 4.5c-1.5-.7-3.1-1.2-4.8-1.4-.2.4-.4.8-.6 1.2-1.8-.3-3.6-.3-5.4 0-.2-.4-.4-.8-.6-1.2-1.7.2-3.3.7-4.8 1.4C1.6 8.7.9 12.7 1.3 16.6c1.8 1.3 3.5 2.1 5.1 2.6.4-.6.8-1.2 1.1-1.8-.6-.2-1.2-.5-1.8-.9.1-.1.3-.2.4-.3 3.3 1.5 6.9 1.5 10.2 0 .1.1.3.2.4.3-.6.4-1.2.7-1.8.9.3.6.7 1.2 1.1 1.8 1.7-.5 3.3-1.3 5.1-2.6.4-3.9-.3-7.9-2.6-12.1zM8.3 14.4c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2zm7.4 0c-1 0-1.8-.9-1.8-2s.8-2 1.8-2 1.8.9 1.8 2-.8 2-1.8 2z"/></svg></a>
-                            <a href="#"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.2-.08-.06-.19-.04-.27-.02-.11.02-1.93 1.23-5.46 3.62-.51.35-.98.52-1.4.51-.46-.01-1.35-.26-2.01-.48-.81-.27-1.44-.42-1.39-.89.03-.25.38-.5 1.05-.76 4.12-1.79 6.87-2.97 8.25-3.54 3.93-1.63 4.74-1.91 5.28-1.92.12 0 .38.03.55.17.14.12.18.28.2.47-.01.08.02.2-.01.37z"/></svg></a>
-                            <a href="#"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.5.4 1.1.4 2.2.1 1.2.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.5.2-1.1.4-2.2.4-1.2.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.5-.4-1.1-.4-2.2-.1-1.2-.1-1.6-.1-4.8s0-3.6.1-4.8c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.5-.2 1.1-.4 2.2-.4 1.2-.1 1.6-.1 4.8-.1zm0 1.8c-3.1 0-3.5 0-4.7.1-1 .0-1.6.2-2 .4-.5.2-.9.4-1.2.8-.4.4-.6.7-.8 1.2-.2.4-.3 1-.4 2-.1 1.2-.1 1.6-.1 4.7s0 3.5.1 4.7c0 1 .2 1.6.4 2 .2.5.4.9.8 1.2.4.4.7.6 1.2.8.4.2 1 .3 2 .4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1 0 1.6-.2 2-.4.5-.2.9-.4 1.2-.8.4-.4.6-.7.8-1.2.2-.4.3-1 .4-2 .1-1.2.1-1.6.1-4.7s0-3.5-.1-4.7c0-1-.2-1.6-.4-2-.2-.5-.4-.9-.8-1.2-.4-.4-.7-.6-1.2-.8-.4-.2-1-.3-2-.4-1.2-.1-1.6-.1-4.7-.1zm0 3.2c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zm0 8.2c-1.8 0-3.2-1.4-3.2-3.2s1.4-3.2 3.2-3.2 3.2 1.4 3.2 3.2-1.4 3.2-3.2 3.2zm6.4-8.4c0 .7-.5 1.2-1.2 1.2s-1.2-.5-1.2-1.2.5-1.2 1.2-1.2 1.2.5 1.2 1.2z"/></svg></a>
-                            <a href="#"><svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg></a>
-                        </div>
+            <div class="profile-top">
+                <img src="https://files.catbox.moe/z5npmw.jpeg" alt="Avatar" class="avatar">
+                <div class="user-info">
+                    <div class="username">
+                        duc
+                        <img src="https://files.catbox.moe/44b5yb.png" style="width: 22px; height: 22px; object-fit: contain; margin-left: 5px;">
+                        <img src="https://files.catbox.moe/t1r6ht.webp" style="width: 22px; height: 22px; object-fit: contain; margin-left: 5px;">
+                    </div>
+                    <div class="sub-text">/</div>
+                    <div class="social-icons">
+                        <a href="#"><img src="https://files.catbox.moe/8oaacy.jpg" alt="App 1"></a>
+                        <a href="#"><img src="https://files.catbox.moe/wiu0c5.jpg" alt="App 2"></a>
                     </div>
                 </div>
+            </div>
 
-                <div class="bottom-bar">
-                    <div class="stat">
-                        <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-                        <span id="clock">19:50:24</span>
-                    </div>
-                    <div class="stat">
-                        <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                        2,535
-                    </div>
-                    <div class="divider"></div>
-                    <div class="stat">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                        your heart
-                    </div>
+            <div class="bottom-bar">
+                <div class="stat">
+                    <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                    <span id="clock">19:50:24</span>
+                </div>
+                <div class="stat">
+                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    2,535
+                </div>
+                <div class="divider"></div>
+                <div class="stat">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    your heart
                 </div>
             </div>
         </div>
 
-        <!-- KHỐI 2: SERVER VÀ USER MINI -->
-        <div class="card-wrapper">
-            <div class="card" style="padding: 15px;">
-                <!-- Star Galaxy -->
-                <div class="server-card" style="border: none; padding: 0; background: transparent;">
-                    <div class="server-avatar">
-                        <img src="https://cdn-icons-png.flaticon.com/512/616/616430.png" alt="Cat">
-                    </div>
-                    <div class="server-info">
-                        <div class="server-name">star galaxy</div>
-                        <div class="server-stats">
-                            <div class="stat"><span class="dot online"></span> 17 Online</div>
-                            <div class="stat"><span class="dot offline"></span> 46 Members</div>
-                        </div>
-                    </div>
-                    <button class="join-btn">Join</button>
+        <div class="server-wrapper">
+            <div class="server-card">
+                <div class="server-avatar">
+                    <img src="https://cdn-icons-png.flaticon.com/512/616/616430.png" alt="Cat">
                 </div>
-                
-                <div style="height: 1px; background: #222; margin: 15px 0;"></div>
+                <div class="server-info">
+                    <div class="server-name">star galaxy</div>
+                    <div class="server-stats">
+                        <div class="stat"><span class="dot online"></span> 17 Online</div>
+                        <div class="stat"><span class="dot offline"></span> 46 Members</div>
+                    </div>
+                </div>
+                <button class="join-btn">Join</button>
+            </div>
+            
+            <div class="separator"></div>
 
-                <!-- User Mini (dunw Idle) -->
-                <div class="user-mini-card" style="border: none; background: transparent; padding: 0;">
-                    <div class="mini-avatar">
-                        <img src="https://files.catbox.moe/z5npmw.jpeg" alt="Duc">
-                        <div class="status-dot"></div>
+            <div class="user-mini">
+                <div class="mini-avatar">
+                    <img src="https://files.catbox.moe/z5npmw.jpeg" alt="Duc">
+                    <div class="status-dot"></div>
+                </div>
+                <div class="mini-info">
+                    <div class="mini-name">
+                        duc 
+                        <span class="badge">⚔️ Fall</span>
                     </div>
-                    <div class="mini-info">
-                        <div class="mini-name">
-                            duc 
-                            <span class="badge">⚔️ Fall</span>
-                        </div>
-                        <div class="mini-status">Idle</div>
-                    </div>
+                    <div class="mini-status">Idle</div>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Nút Scroll và trái tim ở dưới cùng -->
     <div class="scroll-down">
-        <svg class="heart-icon-svg" viewBox="0 0 24 24">
+        <svg class="heart-draw" viewBox="0 0 24 24">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
         </svg>
         <span>KÉO XUỐNG</span>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
     </div>
 
     <script>
-        // Hiệu ứng thời gian thực
         function updateClock() {
             const now = new Date();
             const h = String(now.getHours()).padStart(2, '0');
@@ -503,7 +433,6 @@
         setInterval(updateClock, 1000);
         updateClock();
 
-        // Hiệu ứng tạo lông vũ rơi
         function createFeather() {
             const container = document.getElementById('feathers-container');
             const feather = document.createElement('div');
@@ -511,9 +440,9 @@
             feather.innerText = '🪶';
             
             feather.style.left = Math.random() * 100 + 'vw';
-            const duration = Math.random() * 4 + 4;
+            const duration = Math.random() * 5 + 5;
             feather.style.animationDuration = duration + 's';
-            feather.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            feather.style.fontSize = (Math.random() * 20 + 20) + 'px';
             
             container.appendChild(feather);
             
@@ -522,8 +451,7 @@
             }, duration * 1000);
         }
         
-        // Tạo lông vũ thường xuyên hơn một chút cho giống ảnh
-        setInterval(createFeather, 600);
+        setInterval(createFeather, 800);
     </script>
 </body>
 </html>
